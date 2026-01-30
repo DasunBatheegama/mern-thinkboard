@@ -1,8 +1,12 @@
 import express from "express"
 // const express = require("express");
 import notesRouter from "./routes/notesRoutes.js";
+import { connectDB } from "./config/db.js";
+
 
 const app = express();
+
+connectDB();
 
 app.use("/api/notes", notesRouter);
 
@@ -28,3 +32,6 @@ app.use("/api/notes", notesRouter);
 app.listen(5001, () => {
     console.log("Server is running on port 5001");
 });
+
+
+
