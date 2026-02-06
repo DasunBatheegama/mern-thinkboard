@@ -3,6 +3,7 @@ import express from "express"
 import notesRouter from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
+import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config();
 
@@ -11,10 +12,10 @@ console.log(process.env.MONGO_URI);
 const app = express();
 const PORT = process.env.PORT || 5001
 
-connectDB();
 
 // middleware
 app.use(express.json()); // this middleware will parse JSON bodies: req.body
+app.use(rateLimiter);
 
 // our simple custom middleware
 // app.use((req, res, next) => {
@@ -43,8 +44,10 @@ app.use("/api/notes", notesRouter);
 //     res.status(200).json({"message": "Note deleted successfully!"});
 // });
 
-app.listen(5001, () => {
-    console.log("Server is running on port:", PORT);
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("Server is running on port:", PORT);
+    });
 });
 
 
