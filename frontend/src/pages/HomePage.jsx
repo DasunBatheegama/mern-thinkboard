@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import NoteCard from '../components/NoteCard';
 import api from '../lib/axios';
 import NotesNotFound from '../components/NoteNotFound';
+import toast from 'react-hot-toast';
 
 
 const HomePage = () => {
